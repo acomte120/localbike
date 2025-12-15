@@ -1,0 +1,5 @@
+packages:
+  - package: godatadriven/dbt_date
+    version: 0.17.0
+    #informations found here : https://hub.getdbt.com/godatadriven/dbt_date/latest/
+    #examples found here : https://github.com/godatadriven/dbt-date/blob/0.17.0/integration_tests/models/dim_date.sql

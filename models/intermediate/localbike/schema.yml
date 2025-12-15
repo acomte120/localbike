@@ -1,0 +1,154 @@
+version: 2
+
+models:
+  - name: int_localbike__d_categories
+    description: dimension categories
+    columns:
+      - name: category_id
+        description: "Unique identifier for dimension categories"
+        tests:
+          - unique
+          - not_null
+      - name: category_name
+        description: category name
+        tests:
+          - not_null
+
+  - name: int_localbike__d_brands
+    description: dimension brands
+    columns:
+      - name: brand_id
+        description: "Unique identifier for dimension brands"
+        tests:
+          - unique
+          - not_null
+      - name: brand_name
+        description: brand name
+        tests:
+          - unique
+          - not_null
+
+  - name: int_localbike__d_products
+    description: dimension products
+    columns:
+      - name: product_id
+        description: "Unique identifier for dimension products"
+        tests:
+          - unique
+          - not_null
+      - name: product_name
+        description: product name
+        tests:
+          - not_null
+      - name: brand_id
+        description: "reference to d_brands.brand_id"
+        tests:
+          - not_null
+      - name: category_id
+        description: "reference to d_categories.category_id"
+        tests:
+          - not_null
+      - name: model_year
+        description: model year
+        tests:
+          - not_null
+      - name: list_price
+        description: list price
+        tests:
+          - not_null
+  - name: int_localbike__d_stores
+    description: dimension stores
+    columns:
+      - name: store_id
+        description: "Unique identifier for dimension stores"
+        tests:
+          - unique
+          - not_null
+      - name: store_name
+        description: store name
+        tests:
+          - not_null
+      - name: phone
+        description: phone number
+        tests:
+          - not_null
+      - name: email
+        description: email address
+        tests:
+          - not_null
+      - name: street
+        description: street name
+      - name: city
+        description: city name
+      - name: state
+        description: state name
+      - name: zip_code
+        description: zip code
+
+  - name: int_localbike__d_staffs
+    description: dimension staffs
+    columns:
+      - name: staff_id
+        description: "Unique identifier for dimension staffs"
+        tests:
+          - unique
+          - not_null
+      - name: first_name
+        description: first name
+        tests:
+          - not_null
+      - name: last_name
+        description: last name
+        tests:
+          - not_null
+      - name: email
+        description: email
+        tests:
+          - not_null
+      - name: phone
+        description: phone
+      - name: active
+        description: active
+        tests:
+          - not_null
+      - name: store_id
+        description: "reference to d_stores.store_id"
+        tests:
+          - not_null
+      - name: manager_id
+        description: manager id
+
+  - name: int_localbike__d_customers
+    description: dimension customers
+    columns:
+      - name: customer_id
+        description: "unique identifier for dimension customers"
+        tests:
+          - unique
+          - not_null
+      - name: first_name
+        description: first name
+        tests:
+          - not_null
+      - name: last_name
+        description: last name
+        tests:
+          - not_null
+      - name: phone
+        description: phone number
+        tests:
+          - not_null
+      - name: email
+        description: email address
+        tests:
+          - not_null
+      - name: street
+        description: street name
+      - name: city
+        description: city name
+      - name: state
+        description: state name
+      - name: zip_code
+        description: zip code
+
+          ##ajouter des vraies références pour les clés étrangères.

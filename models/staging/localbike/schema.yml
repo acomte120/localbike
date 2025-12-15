@@ -60,73 +60,34 @@ models:
       - name: zip_code
         description: zip code
 
-  - name: stg_localbike__order_items
-    description: every item in each order
+  - name: stg_localbike__stores
+    description: list of every store
     columns:
-      - name: sale_id
-        description: "unique identifier, from order_id and item_id, for order_items"
-        tests:
-          - unique
-          - not_null
-      - name: order_id
-        description: "reference to orders.order_id"
-        tests:
-          - not_null
-      - name: item_id
-        description: "item identifier for each order"
-        tests:
-          - not_null
-      - name: product_id
-        description: "reference to products.product_id"
-        tests:
-          - not_null
-      - name: quantity
-        description: quantity of products ordered
-        tests:
-          - not_null
-      - name: list_price
-        description: price for each product ordered
-        tests:
-          - not_null
-      - name: discount
-        description: discount to apply for this item
-        tests:
-          - not_null
-
-  - name: stg_localbike__orders
-    description: list of every order
-    columns:
-      - name: order_id
-        description: "unique identifier for orders"
-        tests:
-          - unique
-          - not_null
-      - name: customer_id
-        description: "reference to customers.customer_id"
-        tests:
-          - not_null
-      - name: order_status
-        description: "order status, 4 values available"
-        tests:
-          - not_null
-      - name: order_date
-        description: order date
-        tests:
-          - not_null
-      - name: required_date
-        description: required date
-        tests:
-          - not_null
-      - name: shipped_date
-        description: shipping date, may be null if not shipped
       - name: store_id
-        description: "reference to stores.store_id"
+        description: "Unique identifier for stores"
+        tests:
+          - unique
+          - not_null
+      - name: store_name
+        description: store name
         tests:
           - not_null
-      - name: staff_id
-        description: "reference to staffs.staff_id"
+      - name: phone
+        description: phone number
         tests:
           - not_null
+      - name: email
+        description: email address
+        tests:
+          - not_null
+      - name: street
+        description: street name
+      - name: city
+        description: city name
+      - name: state
+        description: state name
+      - name: zip_code
+        description: zip code
 
   - name: stg_localbike__products
     description: list of every product
@@ -141,13 +102,21 @@ models:
         tests:
           - not_null
       - name: brand_id
-        description: "reference to brands.brand_id"
-        tests:
+        description: "reference to stg_localbike__brands.brand_id"
+        data_tests:
           - not_null
+          - relationships:
+              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+                to: ref('stg_localbike__brands')
+                field: brand_id
       - name: category_id
-        description: "reference to categories.category_id"
-        tests:
+        description: "reference to stg_localbike__categories.category_id"
+        data_tests:
           - not_null
+          - relationships:
+              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+                to: ref('stg_localbike__categories')
+                field: category_id
       - name: model_year
         description: model year
         tests:
@@ -184,11 +153,103 @@ models:
         tests:
           - not_null
       - name: store_id
-        description: "reference to stores.store_id"
-        tests:
+        description: "reference to stg_localbike__stores.store_id"
+        data_tests:
           - not_null
+          - relationships:
+              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+                to: ref('stg_localbike__stores')
+                field: store_id
       - name: manager_id
         description: manager id
+
+  - name: stg_localbike__orders
+    description: list of every order
+    columns:
+      - name: order_id
+        description: "unique identifier for orders"
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: "reference to stg_localbike__customers.customer_id"
+        data_tests:
+          - not_null
+          - relationships:
+              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+                to: ref('stg_localbike__customers')
+                field: customer_id
+      - name: order_status
+        description: "order status, 4 values available"
+        tests:
+          - not_null
+      - name: order_date
+        description: order date
+        tests:
+          - not_null
+      - name: required_date
+        description: required date
+        tests:
+          - not_null
+      - name: shipped_date
+        description: shipping date, may be null if not shipped
+      - name: store_id
+        description: "reference to stg_localbike__stores.store_id"
+        data_tests:
+          - not_null
+          - relationships:
+              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+                to: ref('stg_localbike__stores')
+                field: store_id
+      - name: staff_id
+        description: "reference to stg_localbike__staffs.staff_id"
+        data_tests:
+          - not_null
+          - relationships:
+              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+                to: ref('stg_localbike__staffs')
+                field: staff_id
+
+  - name: stg_localbike__order_items
+    description: every item in each order
+    columns:
+      - name: sale_id
+        description: "unique identifier, from order_id and item_id, for order_items"
+        tests:
+          - unique
+          - not_null
+      - name: order_id
+        description: "reference to stg_localbike__orders.order_id"
+        data_tests:
+          - not_null
+          - relationships:
+              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+                to: ref('stg_localbike__orders')
+                field: order_id
+      - name: item_id
+        description: "item identifier for each order"
+        tests:
+          - not_null
+      - name: product_id
+        description: "reference to stg_localbike__products.product_id"
+        data_tests:
+          - not_null
+          - relationships:
+              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+                to: ref('stg_localbike__products')
+                field: product_id
+      - name: quantity
+        description: quantity of products ordered
+        tests:
+          - not_null
+      - name: list_price
+        description: price for each product ordered
+        tests:
+          - not_null
+      - name: discount
+        description: discount to apply for this item
+        tests:
+          - not_null
 
   - name: stg_localbike__stocks
     description: stock of each store for each product
@@ -199,45 +260,24 @@ models:
           - unique
           - not_null
       - name: store_id
-        description: "reference to stores.store_id"
-        tests:
+        description: "reference to stg_localbike__stores.store_id"
+        data_tests:
           - not_null
+          - relationships:
+              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+                to: ref('stg_localbike__stores')
+                field: store_id
       - name: product_id
-        description: "reference to products.product_id"
-        tests:
+        description: "reference to stg_localbike__products.product_id"
+        data_tests:
           - not_null
+          - relationships:
+              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+                to: ref('stg_localbike__products')
+                field: product_id
       - name: quantity
         description: quantity available
         tests:
           - not_null
 
-  - name: stg_localbike__stores
-    description: list of every store
-    columns:
-      - name: store_id
-        description: "Unique identifier for stores"
-        tests:
-          - unique
-          - not_null
-      - name: store_name
-        description: store name
-        tests:
-          - not_null
-      - name: phone
-        description: phone number
-        tests:
-          - not_null
-      - name: email
-        description: email address
-        tests:
-          - not_null
-      - name: street
-        description: street name
-      - name: city
-        description: city name
-      - name: state
-        description: state name
-      - name: zip_code
-        description: zip code
-        
           ##ajouter des vraies références pour les clés étrangères. installer une historisation de la table stocks ?

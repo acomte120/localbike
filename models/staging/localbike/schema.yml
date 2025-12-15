@@ -1,0 +1,243 @@
+version: 2
+
+models:
+  - name: stg_localbike__brands
+    description: all available brands
+    columns:
+      - name: brand_id
+        description: "unique identifier for brands"
+        tests:
+          - unique
+          - not_null
+      - name: brand_name
+        description: "brand name"
+        tests:
+          - not_null
+
+  - name: stg_localbike__categories
+    description: all available categories
+    columns:
+      - name: category_id
+        description: "unique identifier for categories"
+        tests:
+          - unique
+          - not_null
+      - name: category_name
+        description: "category name"
+        tests:
+          - not_null
+
+  - name: stg_localbike__customers
+    description: all customers
+    columns:
+      - name: customer_id
+        description: "unique identifier for customers"
+        tests:
+          - unique
+          - not_null
+      - name: first_name
+        description: first name
+        tests:
+          - not_null
+      - name: last_name
+        description: last name
+        tests:
+          - not_null
+      - name: phone
+        description: phone number
+        tests:
+          - not_null
+      - name: email
+        description: email address
+        tests:
+          - not_null
+      - name: street
+        description: street name
+      - name: city
+        description: city name
+      - name: state
+        description: state name
+      - name: zip_code
+        description: zip code
+
+  - name: stg_localbike__order_items
+    description: every item in each order
+    columns:
+      - name: sale_id
+        description: "unique identifier, from order_id and item_id, for order_items"
+        tests:
+          - unique
+          - not_null
+      - name: order_id
+        description: "reference to orders.order_id"
+        tests:
+          - not_null
+      - name: item_id
+        description: "item identifier for each order"
+        tests:
+          - not_null
+      - name: product_id
+        description: "reference to products.product_id"
+        tests:
+          - not_null
+      - name: quantity
+        description: quantity of products ordered
+        tests:
+          - not_null
+      - name: list_price
+        description: price for each product ordered
+        tests:
+          - not_null
+      - name: discount
+        description: discount to apply for this item
+        tests:
+          - not_null
+
+  - name: stg_localbike__orders
+    description: list of every order
+    columns:
+      - name: order_id
+        description: "unique identifier for orders"
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: "reference to customers.customer_id"
+        tests:
+          - not_null
+      - name: order_status
+        description: "order status, 4 values available"
+        tests:
+          - not_null
+      - name: order_date
+        description: order date
+        tests:
+          - not_null
+      - name: required_date
+        description: required date
+        tests:
+          - not_null
+      - name: shipped_date
+        description: shipping date, may be null if not shipped
+      - name: store_id
+        description: "reference to stores.store_id"
+        tests:
+          - not_null
+      - name: staff_id
+        description: "reference to staffs.staff_id"
+        tests:
+          - not_null
+
+  - name: stg_localbike__products
+    description: list of every product
+    columns:
+      - name: product_id
+        description: "Unique identifier for products"
+        tests:
+          - unique
+          - not_null
+      - name: product_name
+        description: product name
+        tests:
+          - not_null
+      - name: brand_id
+        description: "reference to brands.brand_id"
+        tests:
+          - not_null
+      - name: category_id
+        description: "reference to categories.category_id"
+        tests:
+          - not_null
+      - name: model_year
+        description: model year
+        tests:
+          - not_null
+      - name: list_price
+        description: list price
+        tests:
+          - not_null
+
+  - name: stg_localbike__staffs
+    description: list of every staff
+    columns:
+      - name: staff_id
+        description: "Unique identifier for staffs"
+        tests:
+          - unique
+          - not_null
+      - name: first_name
+        description: first name
+        tests:
+          - not_null
+      - name: last_name
+        description: last name
+        tests:
+          - not_null
+      - name: email
+        description: email
+        tests:
+          - not_null
+      - name: phone
+        description: phone
+      - name: active
+        description: active
+        tests:
+          - not_null
+      - name: store_id
+        description: "reference to stores.store_id"
+        tests:
+          - not_null
+      - name: manager_id
+        description: manager id
+
+  - name: stg_localbike__stocks
+    description: stock of each store for each product
+    columns:
+      - name: stock_id
+        description: "Unique identifier for stocks"
+        tests:
+          - unique
+          - not_null
+      - name: store_id
+        description: "reference to stores.store_id"
+        tests:
+          - not_null
+      - name: product_id
+        description: "reference to products.product_id"
+        tests:
+          - not_null
+      - name: quantity
+        description: quantity available
+        tests:
+          - not_null
+
+  - name: stg_localbike__stores
+    description: list of every store
+    columns:
+      - name: store_id
+        description: "Unique identifier for stores"
+        tests:
+          - unique
+          - not_null
+      - name: store_name
+        description: store name
+        tests:
+          - not_null
+      - name: phone
+        description: phone number
+        tests:
+          - not_null
+      - name: email
+        description: email address
+        tests:
+          - not_null
+      - name: street
+        description: street name
+      - name: city
+        description: city name
+      - name: state
+        description: state name
+      - name: zip_code
+        description: zip code
+        
+          ##ajouter des vraies références pour les clés étrangères. installer une historisation de la table stocks ?

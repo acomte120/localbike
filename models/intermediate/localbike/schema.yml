@@ -1,6 +1,19 @@
 version: 2
 
 models:
+  - name: int_localbike__d_status
+    description: dimension status
+    columns:
+      - name: status_id
+        description: "Unique identifier for dimension status"
+        tests:
+          - unique
+          - not_null
+      - name: status_name
+        description: status name
+        tests:
+          - not_null
+
   - name: int_localbike__d_categories
     description: dimension categories
     columns:

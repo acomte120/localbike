@@ -181,8 +181,12 @@ models:
                 field: customer_id
       - name: order_status
         description: "order status, 4 values available"
-        tests:
+        data_tests:
           - not_null
+          - accepted_values:
+              arguments:
+                values: [1, 2, 3, 4]
+                quote: false
       - name: order_date
         description: order date
         tests:
@@ -279,5 +283,3 @@ models:
         description: quantity available
         tests:
           - not_null
-
-          ##ajouter des vraies références pour les clés étrangères. installer une historisation de la table stocks ?

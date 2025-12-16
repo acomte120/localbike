@@ -12,7 +12,7 @@ from
     {{ ref('stg_localbike__customers') }}
 union all
 select
-    -1 as customer_id
+    -1 as customer_id,
     'Unknown' as first_name,
     'Unknown' as last_name,
     'Unknown' as phone,

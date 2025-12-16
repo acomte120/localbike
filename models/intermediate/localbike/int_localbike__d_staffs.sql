@@ -10,6 +10,7 @@ select
 from
     {{ ref('stg_localbike__staffs') }}
 union all
+select
     -1 as staff_id,    
     'Unknown' as first_name,
     'Unknown' as last_name,
@@ -17,4 +18,4 @@ union all
     'Unknown' as phone,
     -1 as active,
     -1 as store_id,
-    -1 as manager_id
+    'Unknown' as manager_id

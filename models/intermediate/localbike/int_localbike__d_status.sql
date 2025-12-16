@@ -1,20 +1,19 @@
-select
-    staff_id,
-    first_name,
-    last_name,
-    email,
-    phone,
-    active,
-    store_id,
-    manager_id
+select distinct
+    order_status as status_id,
+    case order_status
+        when 1
+            then 'Order received'
+        when 2
+            then 'Processing'
+        when 3
+            then 'Ready for shipment'
+        when 4
+            then 'Shipped'
+        else 'Undefined'
+        end as status_name
 from
-    {{ ref('stg_localbike__staffs') }}
+    {{ ref("stg_localbike__orders") }} o
 union all
-    -1 as staff_id,    
-    'Unknown' as first_name,
-    'Unknown' as last_name,
-    'Unknown' as email,
-    'Unknown' as phone,
-    -1 as active,
-    -1 as store_id,
-    -1 as manager_id
+select
+    -1 as status_id,
+    'Unknown' as status_name

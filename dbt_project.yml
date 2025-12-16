@@ -43,7 +43,7 @@ models:
       +tags:
         - 'daily'
     intermediate:
-      +materialized: table
+      +materialized: view
       +schema: int_localbike
       +tags:
         - 'daily'

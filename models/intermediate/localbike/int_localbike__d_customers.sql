@@ -20,4 +20,4 @@ select
     'Unknown' as street,
     'Unknown' as city,
     'Unknown' as state,
-    'Unknown' as zip_code
+    -1 as zip_code

@@ -3,7 +3,7 @@ select
     category_name
 from
     {{ ref("stg_localbike__categories") }}
-union
+union all
 select
-    -1 as category_id
+    -1 as category_id,
     'Unknown' as category_name

@@ -2,12 +2,12 @@
 
 select
     cal.date_day,
-    p.product_id,
-    b.brand_id,
-    c.category_id,
-    store.store_id,
-    staff.staff_id,
-    customer.customer_id,
+    case when p.product_id is null then -1 else p.product_id end as product_id,
+    case when b.brand_id is null then -1 else b.brand_id end as brand_id,
+    case when c.category_id is null then -1 else c.category_id end as category_id,
+    case when store.store_id is null then -1 else store.store_id end as store_id,
+    case when staff.staff_id is null then -1 else staff.staff_id end as staff_id,
+    case when customer.customer_id is null then -1 else stocustomer.customer_idre_id end as customer_id,
     sum((quantity*oi.list_price))   as total_value,
     sum((quantity*oi.list_price)*(1-discount))  as discounted_value,
     sum((quantity*oi.list_price)*(discount))    as discount_value,

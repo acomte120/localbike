@@ -2,10 +2,10 @@
 
 select
     date_day,
-    store_id,
-    staff_id,
-    customer_id,
-    order_status as status_id,
+    case when store_id is null then -1 else store_id end as store_id,
+    case when staff_id is null then -1 else staff_id end as staff_id,
+    case when customer_id is null then -1 else customer_id end as customer_id,
+    case when order_status is null then -1 else order_status end as status_id,
     {{ datediff("order_date", "shipped_date", "day") }} as shipping_delay
 from
     {{ ref("int_localbike__d_calendar") }} cal

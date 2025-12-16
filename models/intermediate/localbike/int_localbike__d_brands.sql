@@ -3,7 +3,7 @@ select
     brand_name
 from
     {{ ref("stg_localbike__brands") }}
-union
+union all
 select
     -1 as brand_id,
     'Unknown' as brand_name

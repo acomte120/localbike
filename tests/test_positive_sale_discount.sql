@@ -3,4 +3,4 @@ select
 from
     {{ ref("int_localbike__f_sales") }}
 where
-    discount > 1
+    discounted_value > total_value

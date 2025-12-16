@@ -1,0 +1,342 @@
+version: 2
+
+models:
+  - name: mrt_localbike__d_status
+    description: dimension status
+    columns:
+      - name: status_id
+        description: "Unique identifier for dimension status"
+        tests:
+          - unique
+          - not_null
+      - name: status_name
+        description: status name
+        tests:
+          - not_null
+
+  - name: mrt_localbike__d_categories
+    description: dimension categories
+    columns:
+      - name: category_id
+        description: "Unique identifier for dimension categories"
+        tests:
+          - unique
+          - not_null
+      - name: category_name
+        description: category name
+        tests:
+          - not_null
+
+  - name: mrt_localbike__d_brands
+    description: dimension brands
+    columns:
+      - name: brand_id
+        description: "Unique identifier for dimension brands"
+        tests:
+          - unique
+          - not_null
+      - name: brand_name
+        description: brand name
+        tests:
+          - unique
+          - not_null
+
+  - name: mrt_localbike__d_products
+    description: dimension products
+    columns:
+      - name: product_id
+        description: "Unique identifier for dimension products"
+        tests:
+          - unique
+          - not_null
+      - name: product_name
+        description: product name
+        tests:
+          - not_null
+      - name: brand_id
+        description: "reference to d_brands.brand_id"
+        data_tests:
+          - not_null
+          - relationships:
+              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+                to: ref('mrt_localbike__d_brands')
+                field: brand_id
+      - name: category_id
+        description: "reference to d_categories.category_id"
+        data_tests:
+          - not_null
+          - relationships:
+              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+                to: ref('mrt_localbike___categories')
+                field: category_id
+      - name: model_year
+        description: model year
+        tests:
+          - not_null
+      - name: list_price
+        description: list price
+        tests:
+          - not_null
+
+  - name: mrt_localbike__d_stores
+    description: dimension stores
+    columns:
+      - name: store_id
+        description: "Unique identifier for dimension stores"
+        tests:
+          - unique
+          - not_null
+      - name: store_name
+        description: store name
+        tests:
+          - not_null
+      - name: phone
+        description: phone number
+        tests:
+          - not_null
+      - name: email
+        description: email address
+        tests:
+          - not_null
+      - name: street
+        description: street name
+      - name: city
+        description: city name
+      - name: state
+        description: state name
+      - name: zip_code
+        description: zip code
+
+  - name: mrt_localbike__d_staffs
+    description: dimension staffs
+    columns:
+      - name: staff_id
+        description: "Unique identifier for dimension staffs"
+        tests:
+          - unique
+          - not_null
+      - name: first_name
+        description: first name
+        tests:
+          - not_null
+      - name: last_name
+        description: last name
+        tests:
+          - not_null
+      - name: email
+        description: email
+        tests:
+          - not_null
+      - name: phone
+        description: phone
+      - name: active
+        description: active
+        tests:
+          - not_null
+      - name: store_id
+        description: "reference to d_stores.store_id"
+        data_tests:
+          - not_null
+          - relationships:
+              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+                to: ref('mrt_localbike__d_stores')
+                field: store_id
+      - name: manager_id
+        description: manager id
+
+  - name: mrt_localbike__d_customers
+    description: dimension customers
+    columns:
+      - name: customer_id
+        description: "unique identifier for dimension customers"
+        tests:
+          - unique
+          - not_null
+      - name: first_name
+        description: first name
+        tests:
+          - not_null
+      - name: last_name
+        description: last name
+        tests:
+          - not_null
+      - name: phone
+        description: phone number
+        tests:
+          - not_null
+      - name: email
+        description: email address
+        tests:
+          - not_null
+      - name: street
+        description: street name
+      - name: city
+        description: city name
+      - name: state
+        description: state name
+      - name: zip_code
+        description: zip code
+
+  - name: mrt_localbike__d_calendar
+    description: calendar from 2016-01-01 to 2018-12-31
+    columns:
+      - name: date_day
+        description: date day
+        tests:
+          - unique
+          - not_null
+
+
+  - name: mrt_localbike__f_orders
+    description: facts about orders
+    columns:
+      - name: date_day
+        description: date day
+        data_tests:
+          - not_null
+          - relationships:
+              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+                to: ref('mrt_localbike__d_calendar')
+                field: date_day
+      - name: store_id
+        description: store_id from mrt_localbike__d_store
+        data_tests:
+          - not_null
+          - relationships:
+              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+                to: ref('mrt_localbike__d_stores')
+                field: store_id
+      - name: staff_id
+        description: staff_id from mrt_localbike__d_staffs
+        data_tests:
+          - not_null
+          - relationships:
+              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+                to: ref('mrt_localbike__d_staffs')
+                field: staff_id
+      - name: customer_id
+        description: customer_id from mrt_localbike__d_customers
+        data_tests:
+          - not_null
+          - relationships:
+              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+                to: ref('mrt_localbike__d_customers')
+                field: customer_id
+      - name: status_id
+        description: status_id from mrt_localbike__d_status
+        data_tests:
+          - not_null
+          - relationships:
+              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+                to: ref('mrt_localbike__d_status')
+                field: status_id
+      #- name: shipping_delay
+      #  description: shipping_date - order_date from orders, cannot be negative, can be null if order is not shipped
+
+  - name: mrt_localbike__f_sales
+    description: facts about sales
+    columns:
+      - name: date_day
+        description: date day
+        data_tests:
+          - not_null
+          - relationships:
+              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+                to: ref('mrt_localbike__d_calendar')
+                field: date_day
+      - name: product_id
+        description: product_id from mrt_localbike__d_product
+        data_tests:
+          - not_null
+          - relationships:
+              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+                to: ref('mrt_localbike__d_products')
+                field: product_id
+      - name: brand_id
+        description: brand_id from mrt_localbike__d_brands
+        data_tests:
+          - not_null
+          - relationships:
+              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+                to: ref('mrt_localbike__d_brands')
+                field: brand_id
+      - name: category_id
+        description: category_id from mrt_localbike__d_categories
+        data_tests:
+          - not_null
+          - relationships:
+              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+                to: ref('mrt_localbike__d_categories')
+                field: category_id
+      - name: store_id
+        description: store_id from mrt_localbike__d_store
+        data_tests:
+          - not_null
+          - relationships:
+              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+                to: ref('mrt_localbike__d_stores')
+                field: store_id
+      - name: staff_id
+        description: staff_id from mrt_localbike__d_staffs
+        data_tests:
+          - not_null
+          - relationships:
+              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+                to: ref('mrt_localbike__d_staffs')
+                field: staff_id
+      - name: customer_id
+        description: customer_id from mrt_localbike__d_customers
+        data_tests:
+          - not_null
+          - relationships:
+              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+                to: ref('mrt_localbike__d_customers')
+                field: customer_id
+      - name: total_value
+        description: total value of sale without any discount must be positive
+      - name: discounted_value
+        description: total value of sale with discount included must be positive
+      - name: discount_value
+        description: total value of discount may be null if no discount applied
+      - name: total_quantity
+        description: quantity sold must be positive
+
+  - name: mrt_localbike__f_stocks
+    description: facts about stocks
+    columns:
+      - name: product_id
+        description: product_id from mrt_localbike__d_product
+        data_tests:
+          - not_null
+          - relationships:
+              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+                to: ref('mrt_localbike__d_products')
+                field: product_id
+      - name: brand_id
+        description: brand_id from mrt_localbike__d_brands
+        data_tests:
+          - not_null
+          - relationships:
+              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+                to: ref('mrt_localbike__d_brands')
+                field: brand_id
+      - name: category_id
+        description: category_id from mrt_localbike__d_categories
+        data_tests:
+          - not_null
+          - relationships:
+              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+                to: ref('mrt_localbike__d_categories')
+                field: category_id
+      - name: store_id
+        description: store_id from mrt_localbike__d_store
+        data_tests:
+          - not_null
+          - relationships:
+              arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
+                to: ref('mrt_localbike__d_stores')
+                field: store_id
+      - name: current_quantity
+        description: quantity sold must be positive
+        tests:
+          - not_null

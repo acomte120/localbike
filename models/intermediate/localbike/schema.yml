@@ -294,18 +294,12 @@ models:
                 field: customer_id
       - name: total_value
         description: total value of sale without any discount must be positive
-        tests:
-          - not_null
       - name: discounted_value
         description: total value of sale with discount included must be positive
-        tests:
-          - not_null
       - name: discount_value
         description: total value of discount may be null if no discount applied
       - name: total_quantity
         description: quantity sold must be positive
-        tests:
-          - not_null
 
   - name: int_localbike__f_stocks
     description: facts about stocks

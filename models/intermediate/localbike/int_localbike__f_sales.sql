@@ -8,10 +8,10 @@ select
     case when store.store_id is null then -1 else store.store_id end as store_id,
     case when staff.staff_id is null then -1 else staff.staff_id end as staff_id,
     case when customer.customer_id is null then -1 else customer.customer_id end as customer_id,
-    sum((quantity*oi.list_price))   as total_value,
-    sum((quantity*oi.list_price)*(1-discount))  as discounted_value,
-    sum((quantity*oi.list_price)*(discount))    as discount_value,
-    sum(quantity) as total_quantity
+    0+sum((quantity*oi.list_price))   as total_value,
+    0+sum((quantity*oi.list_price)*(1-discount))  as discounted_value,
+    0+sum((quantity*oi.list_price)*(discount))    as discount_value,
+    0+sum(quantity) as total_quantity
 from
     {{ ref("int_localbike__d_calendar") }} cal
     left outer join {{ ref("stg_localbike__orders") }} orders on (cal.date_day = orders.order_date)

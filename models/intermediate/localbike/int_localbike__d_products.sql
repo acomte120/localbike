@@ -7,7 +7,7 @@ select
     list_price
 from
     {{ ref("stg_localbike__products") }}
-union
+union all
 select
     -1 as brand_id,
     'Unknown' as product_name,

@@ -10,7 +10,7 @@ select
     zip_code
 from
     {{ ref('stg_localbike__customers') }}
-union
+union all
 select
     -1 as customer_id
     'Unknown' as first_name,

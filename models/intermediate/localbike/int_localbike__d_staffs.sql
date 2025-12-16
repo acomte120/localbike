@@ -15,6 +15,6 @@ union all
     'Unknown' as last_name,
     'Unknown' as email,
     'Unknown' as phone,
-    'Unknown' as active,
+    -1 as active,
     -1 as store_id,
     -1 as manager_id

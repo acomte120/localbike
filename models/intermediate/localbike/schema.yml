@@ -230,8 +230,8 @@ models:
               arguments: # available in v1.10.5 and higher. Older versions can set the <argument_name> as the top-level property.
                 to: ref('int_localbike__d_status')
                 field: status_id
-      - name: shipping_delay
-        description: shipping_date - order_date from orders, cannot be negative, can be null if order is not shipped
+      #- name: shipping_delay
+      #  description: shipping_date - order_date from orders, cannot be negative, can be null if order is not shipped
 
   - name: int_localbike__f_sales
     description: facts about sales

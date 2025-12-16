@@ -1,0 +1,12 @@
+select
+    customer_id,
+    first_name,
+    last_name,
+    phone,
+    email,
+    street,
+    city,
+    state,
+    zip_code
+from
+    {{ ref("int_localbike__d_customers") }}
